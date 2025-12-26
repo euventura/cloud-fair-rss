@@ -1,0 +1,11 @@
+<article class="{{ if .Star }}star{{ end }} {{ .Class}}" style="order: {{ .Date.Unix }};">
+    <div>
+        <span><a href="{{ .Link }}">{{ .Author }}</a></span>
+        <span>{{ .Date.Format "02.01.2006 15:04" }}</span>
+
+    </div>
+    <div>
+        <h4>{{ .Title }}</h4>
+        <p>{{ .Description }}...</p>
+    </div>
+</article>
