@@ -33,3 +33,4 @@ jobs:
           port: ${{ secrets.DO_PORT }}
           source: "rss,sources.txt,template,static"
           target: "${{ secrets.DO_PATH }}"
+          overwrite: true
