@@ -192,14 +192,8 @@
 
 <body>
 
-    <header>
-        <nav>
-            <ul>
-                <li><a href="24122025/index.html">2412</a></li>
-                <li><a href="25122025/index.html">2512</a></li>
-                <li><a href="26122025/index.html">2612</a></li>
-            </ul>
-        </nav>
+    <header id="header">
+
     </header>
     <div id="main">
 
@@ -223,6 +217,19 @@
                 })
             return false;
         }
+    }
+
+    document.onload = function () {
+        fetch("menu.html")
+            .then(response => response.text())
+            .then(data => {
+                console.log(data)
+                document.getElementById("header").innerHTML = data;
+
+            }).finally(() => {
+
+                document.getElementById("o-0").click();
+            })
     }
 
 </script>

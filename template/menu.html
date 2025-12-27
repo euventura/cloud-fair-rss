@@ -1,0 +1,7 @@
+<nav>
+    <ul>
+        {{ range $i, $l := .Menu }}
+        <li><a href="editions/{{ $l }}" id="o-{{$i}}">{{ $l }}</a></li>
+        {{ end }}
+    </ul>
+</nav>

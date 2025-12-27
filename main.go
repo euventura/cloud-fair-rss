@@ -37,10 +37,13 @@ type Entry struct {
 	Date        time.Time
 	Class       string
 	ID          string
+	Menu        []string
 }
 
 var artPath = "/template/article.html"
 var hePath = "/template/headline.html"
+var mePath = "/template/menu.html"
+
 var stPath = "./static/editions/"
 
 func newFeed() *Feed {
@@ -125,6 +128,7 @@ func (f *Feed) fetch() {
 
 	fmt.Printf("Writing Index.html: %d\n", len(index))
 	os.WriteFile(nPath+"/index.html", []byte(index), 0644)
+	f.makeMenu()
 }
 
 func dir() string {
@@ -201,4 +205,26 @@ func (f *Feed) make(data Entry, templatePath string) string {
 	}
 
 	return buf.String()
+}
+
+func (f *Feed) makeMenu() {
+	di, err := os.ReadDir(stPath)
+
+	if err != nil {
+		fmt.Println("Erro ao ler diretório:", err)
+		return
+	}
+
+	e := Entry{}
+
+	for _, d := range di {
+		e.Menu = append(e.Menu, d.Name())
+	}
+	mePAthC := dir() + mePath
+
+	cont := f.make(e, mePAthC)
+
+	wPath := stPath + time.Now().Format("02012006") + "/menu.html"
+	err = os.WriteFile(wPath, []byte(cont), 0644)
+
 }

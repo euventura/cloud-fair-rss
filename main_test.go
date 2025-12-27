@@ -18,3 +18,16 @@ func TestFetch(t *testing.T) {
 	}
 
 }
+
+func TestMenu(t *testing.T) {
+
+	f := newFeed()
+	f.makeMenu()
+
+	_, err := os.ReadFile(dir() + "/" + stPath + time.Now().Format("02012006") + "/menu.html")
+
+	if err != nil {
+		t.Errorf("Erro ao ler o arquivo menu.html: %v", err)
+	}
+
+}

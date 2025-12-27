@@ -26,6 +26,5 @@ go.work
 *.swo
 *~
 .DS_Store
-sources.txt
 /static/editions
 cloud-fair-rss
