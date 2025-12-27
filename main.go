@@ -197,6 +197,11 @@ func (f *Feed) process(gof *gofeed.Feed, star bool, wPath string, ch chan<- stri
 		const regex = `<.*?>`
 		r := regexp.MustCompile(regex)
 		desc := r.ReplaceAllString(item.Description, "")
+
+		if desc == "" {
+			desc = r.ReplaceAllString(item.Content, "")
+		}
+
 		words := strings.Fields(desc)
 
 		class := slug.Make(author)
