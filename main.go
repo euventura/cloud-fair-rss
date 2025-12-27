@@ -1,10 +1,11 @@
 package main
 
 import (
-	"bufio"
 	"bytes"
 	"fmt"
 	"html/template"
+	"io"
+	"net/http"
 	"net/url"
 	"os"
 	"regexp"
@@ -38,6 +39,7 @@ type Entry struct {
 	Class       string
 	ID          string
 	Menu        []string
+	Back        string
 }
 
 var artPath = "/template/article.html"
@@ -64,25 +66,42 @@ func main() {
 
 func (f *Feed) loadSources() {
 
-	file, err := os.Open("./sources.txt")
+	file, err := os.ReadFile("./sources.txt")
 
-	if err == nil {
-		scanner := bufio.NewScanner(file)
-		for scanner.Scan() {
-			line := scanner.Text()
-			star := false
-			lastChar := line[len(line)-1:]
-			if lastChar == "*" {
-				line = line[:len(line)-1]
-				star = true
-			}
-			source := Source{
-				URL:  line,
-				Star: star,
-			}
-			f.Sources = append(f.Sources, source)
-		}
+	if err != nil {
+		fmt.Println("Erro ao ler fontes:", err)
 		return
+	}
+
+	r, err := http.Get(string(file))
+
+	if err != nil {
+		fmt.Println("Erro ao ler fontes:", err)
+		return
+	}
+	defer r.Body.Close()
+
+	body, err := io.ReadAll(r.Body)
+
+	if err != nil {
+		fmt.Println("Erro ao ler fontes:", err)
+		return
+	}
+
+	sources := strings.Split(string(body), "\n")
+
+	for _, line := range sources {
+		star := false
+		lastChar := line[len(line)-1:]
+		if lastChar == "*" {
+			line = line[:len(line)-1]
+			star = true
+		}
+		source := Source{
+			URL:  line,
+			Star: star,
+		}
+		f.Sources = append(f.Sources, source)
 	}
 
 }
@@ -158,8 +177,8 @@ func (f *Feed) process(gof *gofeed.Feed, star bool, wPath string, ch chan<- stri
 		words := strings.Fields(desc)
 
 		class := slug.Make(author)
-
-		url := "/editions/" + time.Now().Format("02012006") + "/" + slug.Make(item.Title) + ".html"
+		back := "/editions/" + time.Now().Format("02012006") + "/"
+		url := back + slug.Make(item.Title) + ".html"
 
 		data := Entry{
 			Star:        star,
@@ -172,6 +191,7 @@ func (f *Feed) process(gof *gofeed.Feed, star bool, wPath string, ch chan<- stri
 			Description: strings.Join(words[0:min(38, len(words))], " "),
 			Class:       class,
 			ID:          slug.Make(item.Title),
+			Back:        back + "index.html",
 		}
 		fiName = slug.Make(item.Title) + ".html"
 		article := f.make(data, dir()+artPath)

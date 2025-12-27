@@ -1,3 +1,1 @@
-https://phong.bearblog.dev/rss
-https://blog.armeet.ca/rss* << this star and give some highlight for all news from this source
-https://blog.avas.space/rss
+https://gist.githubusercontent.com/euventura/97d8acf1bf61e0f5fa4913b9ad20b433/raw/4bc4857b4fc769c8c72d36bd03bc030adb0ae769/gistfile1.txt

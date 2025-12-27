@@ -44,7 +44,8 @@
             color: var(----black);
             font-weight: 700;
             font-family: "Young Serif", serif;
-            ;
+            font-size: 2em;
+            color: var(--accent);
         }
 
         header nav {
@@ -186,7 +187,7 @@
             padding: 2rem 1rem;
         }
     </style>
-    <title>Feed Rss</title>
+    <title>daily digest | Euventura</title>
 </head>
 
 <body>
@@ -194,6 +195,10 @@
     </header>
     <div id="main">
     </div>
+    <footer>
+        daily digest by <a href="https://euventura.com.br" target="_blank">Euventura</a> - <a
+            href="https://harmonista.org" target="_blank">harmonista ⌐◯ᵔ◯</a>
+    </footer>
 </body>
 
 </html>
@@ -207,26 +212,38 @@
 
             }).finally(() => {
 
-                for (let i = 0; i < document.getElementsByTagName("a").length; i++) {
-                    document.getElementsByTagName("a")[i].onclick = function () {
-                        fetch(this.href)
-                            .then(response => response.text())
-                            .then(data => {
-                                console.log(data)
-                                document.getElementById("main").innerHTML = "<section id='feed'>" + data + "</section>";
-                            })
-                        return false;
-                    }
-                }
-
+                reloadABehavior()
                 document.getElementById("o-0").click();
             })
     }
 
     document.addEventListener('DOMContentLoaded', function () {
         loadHeader()
+
     });
 
+
+    function reloadABehavior() {
+        for (let i = 0; i < document.getElementsByTagName("a").length; i++) {
+
+            document.getElementsByTagName("a")[i].onclick = function (event) {
+
+                if (this.target == "_blank") {
+                    return true;
+                }
+                event.preventDefault();
+                fetch(this.href)
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById("main").innerHTML = "<section id='feed'>" + data + "</section>";
+                    }).finally(() => {
+                        reloadABehavior()
+                    });
+                return false;
+            }
+        }
+
+    }
 
 
 
