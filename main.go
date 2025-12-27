@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"html/template"
 	"io"
+	"log"
 	"net/http"
 	"net/url"
 	"os"
@@ -14,6 +15,7 @@ import (
 	"time"
 
 	"github.com/gosimple/slug"
+	"github.com/joho/godotenv"
 	"github.com/mmcdole/gofeed"
 )
 
@@ -57,38 +59,41 @@ func newFeed() *Feed {
 }
 
 func main() {
-	fmt.Println("Start")
+
+	args := os.Args[1:]
+	fmt.Println("start")
+	fmt.Println(len(args))
+
+	if len(args) > 0 && len(args[0]) > 10 && args[0][:8] == "https://" {
+		addSource(args[0])
+		return
+	}
+
 	f := newFeed()
 	f.fetch()
 	fmt.Println("Success")
 
 }
 
-func (f *Feed) loadSources() {
-
-	file, err := os.ReadFile("./sources.txt")
-
+func loadGist() string {
+	r, err := http.Get("https://gist.github.com/" + os.Getenv("GH_USER") + "/" + os.Getenv("GIST_ID") + "/raw")
 	if err != nil {
-		fmt.Println("Erro ao ler fontes:", err)
-		return
-	}
-
-	r, err := http.Get(string(file))
-
-	if err != nil {
-		fmt.Println("Erro ao ler fontes:", err)
-		return
+		fmt.Println("Erro ao ler gist:", err)
+		return ""
 	}
 	defer r.Body.Close()
 
 	body, err := io.ReadAll(r.Body)
 
 	if err != nil {
-		fmt.Println("Erro ao ler fontes:", err)
-		return
+		fmt.Println("Erro ao ler gist:", err)
+		return ""
 	}
-
-	sources := strings.Split(string(body), "\n")
+	return string(body)
+}
+func (f *Feed) loadSources() {
+	body := loadGist()
+	sources := strings.Split(body, "\n")
 
 	for _, line := range sources {
 		star := false
@@ -252,4 +257,64 @@ func (f *Feed) makeMenu() {
 	wPath := stPath + "/menu.html"
 	err = os.WriteFile(wPath, []byte(cont), 0644)
 
+}
+
+func addSource(toAdd string) {
+
+	if toAdd == "" {
+		return
+	}
+
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatalf("Error loading .env file: %s", err)
+	}
+	ghKey := os.Getenv("GH_KEY")
+	gistID := os.Getenv("GIST_ID")
+
+	if ghKey == "" {
+		fmt.Println("GH_KEY not set")
+		return
+	}
+
+	if gistID == "" {
+		fmt.Println("GIST_ID not set")
+		return
+	}
+
+	gist := loadGist()
+	gist += "\n" + toAdd
+
+	// Criar o JSON para atualizar o gist
+	jsonData := fmt.Sprintf(`{"files":{"sources.txt":{"content":%q}}}`, gist)
+
+	// Criar o request PATCH
+	client := &http.Client{}
+	req, err := http.NewRequest("PATCH", "https://api.github.com/gists/"+gistID, strings.NewReader(jsonData))
+	if err != nil {
+		fmt.Println("Erro ao criar request:", err)
+		return
+	}
+
+	// Adicionar headers de autenticação
+	req.Header.Set("Authorization", "Bearer "+ghKey)
+	req.Header.Set("Accept", "application/vnd.github+json")
+	req.Header.Set("Content-Type", "application/json")
+
+	// Executar o request
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Println("Erro ao atualizar gist:", err)
+		return
+	}
+	defer resp.Body.Close()
+
+	fmt.Println("Status:", resp.Status)
+
+	if resp.StatusCode == 200 {
+		fmt.Println("Source adicionado com sucesso!")
+	} else {
+		body, _ := io.ReadAll(resp.Body)
+		fmt.Println("Erro:", string(body))
+	}
 }
