@@ -1,4 +1,4 @@
-module cloudfair
+module github.com/euventura/cloud-fair-rss
 
 go 1.25.5
 

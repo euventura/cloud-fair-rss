@@ -28,3 +28,4 @@ go.work
 .DS_Store
 sources.txt
 /static/editions
+cloud-fair-rss
