@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"html/template"
 	"io"
-	"log"
 	"net/http"
 	"net/url"
 	"os"
@@ -15,7 +14,6 @@ import (
 	"time"
 
 	"github.com/gosimple/slug"
-	"github.com/joho/godotenv"
 	"github.com/mmcdole/gofeed"
 )
 
@@ -59,27 +57,6 @@ func newFeed() *Feed {
 }
 
 func main() {
-
-	ePath, _ := os.Executable()
-	eDir := strings.TrimSuffix(ePath, "/rss")
-	err := godotenv.Load(eDir + "/.env")
-
-	if err != nil {
-		err2 := godotenv.Load(dir() + "/.env")
-		if err2 != nil {
-			log.Fatalf("Error loading .env file: %s", err2)
-		}
-	}
-
-	args := os.Args[1:]
-
-	if len(args) > 0 && len(args[0]) > 10 && args[0][:8] == "https://" {
-		fmt.Println("adding Source...")
-		addSource(args[0])
-		fmt.Println("Done!")
-
-		return
-	}
 
 	f := newFeed()
 	fmt.Println("Fetching feeds...")
