@@ -26,6 +26,4 @@ go.work
 *.swo
 *~
 .DS_Store
-/static/editions
 rss
-sources.txt
