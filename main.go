@@ -199,8 +199,7 @@ func (f *Feed) process(gof *gofeed.Feed, star bool, wPath string, ch chan<- stri
 		words := strings.Fields(desc)
 
 		class := slug.Make(author)
-		back := "/rss/"
-		url := back + slug.Make(item.Title) + ".html"
+		url := slug.Make(item.Title) + ".html"
 
 		data := Entry{
 			Star:        star,
@@ -213,7 +212,7 @@ func (f *Feed) process(gof *gofeed.Feed, star bool, wPath string, ch chan<- stri
 			Description: strings.Join(words[0:min(38, len(words))], " "),
 			Class:       class,
 			ID:          slug.Make(item.Title),
-			Back:        back + "index.html",
+			Back:        "/",
 		}
 
 		fiName = slug.Make(item.Title) + ".html"
