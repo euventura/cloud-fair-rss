@@ -1,71 +1,96 @@
 # ACid Rss
 
-## Because You Needed Another RSS Reader, Obviously
+## The Aggressively Manual RSS Reader for People Who Miss Slow Internet
 
-Welcome to the most unnecessarily simple RSS reader you'll ever encounter. While everyone else is busy building "full-stack AI-powered blockchain-integrated RSS solutions with microservices architecture," we're over here reading XML from a GitHub Gist and spitting out HTML files like it's 1999.
+Welcome to the most deliberately inconvenient RSS reader you'll ever encounter. While everyone else is building "real-time AI-curated feeds with instant push notifications and infinite scroll," we're over here making you *manually run a command* to read the news. Like some kind of caveman. With a terminal.
 
-### What This Abomination Does
+### What This Beautiful Disaster Does
 
-1. **Reads RSS feeds from a GitHub Gist** - Because storing a list of URLs in a proper database would be too mainstream. Why use PostgreSQL when you can abuse GitHub's API for free hosting?
+1. **Reads RSS feeds from a text file** - We evolved. Now we use `sources.txt`. Revolutionary, I know. We went from one text file hosted on GitHub to... another text file hosted on GitHub. Progress.
 
-2. **Generates Static HTML** - That's right. No React. No Vue. No Angular. No SPA. No SSR. No ISR. No hydration. No bundlers. No build step that takes 10 minutes. Just plain, boring, fast HTML that actually works without 500MB of node_modules.
+2. **Generates Static HTML via Pipeline** - That's right. No dynamic content. No live updates. No WebSockets. You run the pipeline, it generates HTML files, and then you stare at them until you decide you want fresh content. Which means running the pipeline again. Manually. Because we're not animals who need automation.
 
-3. **That's It** - Seriously, that's the whole thing. No user authentication. No comments section. No analytics. No tracking. No cookies. No GDPR banners. No newsletter popup. No "download our app" nag screen. Just RSS feeds and HTML.
+3. **Publishes to GitHub Pages** - Because paying for hosting is for people with money. This costs exactly $0.00 and works perfectly fine, which is infuriating to cloud providers everywhere.
 
-### Why Would Anyone Use This?
+4. **Is NOT Automatic** - This is the best part. You have to *actually run the command* to fetch new articles. No cron jobs. No webhooks. No CI/CD automation running every 5 minutes burning through GitHub Actions minutes like a SpaceX rocket. When you want news, you ask for it. Like a civilized human being.
 
-Great question. Here are some terrible reasons:
+### Why Would Anyone Deliberately Make This So Inconvenient?
 
-- You're tired of RSS readers that require you to create an account
-- You hate modern web development with a burning passion
-- You think JavaScript frameworks are overrated (they are)
-- You want to host your RSS feeds on GitHub Pages because you're cheap (relatable)
-- You believe in the healing power of static files
-- You've finally accepted that RSS never died, your favorite websites just gave up on it
+Excellent question. Here's the bitter truth:
 
-### Features We DON'T Have
+**Because your internet doesn't need to be a firehose of anxiety.**
 
-- AI-powered feed recommendations (just... no)
-- ocial media integration (why would you want this?)
-- Cloud sync (it's literally on GitHub, git pull)
-- Mobile apps (use a browser, it's 2025)
-- Premium subscription tier (everything is free because it costs nothing to run)
-- Dark mode toggle (edit the CSS yourself, you're welcome)
+- Remember when you had to *choose* to check the news instead of having it screamed at your face 24/7?
+- Remember when HackerNews wasn't vomiting 500 articles per day into your eyeballs?
+- Remember when you could go outside without your phone vibrating with another "BREAKING NEWS" notification about some random startup's Series A funding?
+
+This reader is deliberately slow. Deliberately manual. Deliberately calm. You run it when you want to read. Not when some algorithm decides you should be reading.
+
+### Why Would Anyone Actually Use This?
+
+Because you're one of the few people left who understands that:
+
+- Not everything needs real-time updates (spoiler: almost nothing does)
+- The FOMO economy is a scam designed to keep you scrolling
+- Manually refreshing your feed is actually *liberating*
+- Static files load faster than your fancy React app ever will
+- You're tired of the internet treating you like a dopamine slot machine
+- You want to host your RSS feeds on GitHub Pages because you're cheap and smart (there's a difference)
+
+### Features We PROUDLY DON'T Have
+
+- Real-time updates (refresh yourself, we're not your servants)
+- Automatic fetching (make a conscious choice to read the news)
+- Push notifications (your phone has enough problems)
+- AI-powered feed recommendations (read what you subscribed to, not what an algorithm thinks you want)
+- Social media integration (go touch grass)
+- Cloud sync (it's on GitHub, git pull like an adult)
+- Mobile apps (browsers work on phones, shocking I know)
+- Premium subscription tier (paying money to read free RSS feeds would be peak capitalism)
+- Dark mode toggle (edit the CSS, it's literally 20 lines)
 
 ### Installation
 
 ```bash
-# Clone this masterpiece
+# Clone this monument to intentional friction
 git clone <your-repo-url>
 
-# Install dependencies (there are like 2 of them)
+# Install dependencies (there's basically none because we're not psychopaths)
 go mod download
 
-# and then
-go for yout self
-```
+# Edit sources.txt with your RSS feeds
+# Yes, with a text editor. No, we don't have a GUI. 
+# No, we won't build one. Vim exists for a reason.
+vim sources.txt
 
-Congratulations, you now have HTML files. Deploy them to any static host from 2008.
+
+```
 
 ### Configuration
 
-Edit your GitHub Gist with your RSS feeds. Yes, manually. No, we don't have a GUI. No, we won't build one. Use a text editor like an adult.
+1. Edit `sources.txt` with your RSS feed URLs (one per line, we're not monsters)
+2. That's literally it. You can put a * in the end of the url to put a star class in css
+3. No API keys
+4. No OAuth flows
+5. No environment variables
+6. No .env files
+7. No Docker containers
+8. No Kubernetes clusters (what's wrong with you?)
+9. Just a text file with URLs in it
+
+**Pro tip:** Choose feeds that update infrequently. If you're subscribing to feeds that post 50 times a day, you've defeated the entire purpose of this project and you should reconsider your life choices.
 
 ### Performance
 
-It's fast. Really fast. Know why? Because we don't do anything fancy. No database queries. No API calls except fetching the RSS feeds. No server-side rendering. No client-side hydration. Just files. Beautiful, static, cacheable files.
+It's fast. Ridiculously fast. Know why? 
 
-### Contributing
+Because we don't do **anything**.
 
-If you want to add features, please reconsider. This project's main feature is its lack of features. 
+- No database queries (no database to query)
+- No API calls (except fetching RSS feeds, which you triggered manually)
+- No server-side rendering (there's no server)
+- No client-side hydration (there's any JavaScript)
+- No real-time updates (there's no real-time anything)
+- Just files sitting on a CDN, cached by GitHub, served at the speed of light
 
-But if you insist:
-- Keep it simple
-- No JavaScript frameworks
-- No databases
-- No authentication systems
-- No "just one more dependency"
-
-### License
-
-Do whatever you want with this. Seriously. Take it. Modify it. Sell it. I don't care. It's so simple you could rewrite it in an hour anyway.
+The website loads instantly because it's literally just HTML and CSS. You know, like websites used to work before we decided everything needed to be a "web app."
