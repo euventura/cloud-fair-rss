@@ -20,3 +20,4 @@ https://blog.absurdpirate.com/rss
 https://kami.bearblog.dev/rss
 https://moonlampstation.com/rss
 https://karlitahehe.bearblog.dev/rss
+https://chubsos.bearblog.dev/rss
