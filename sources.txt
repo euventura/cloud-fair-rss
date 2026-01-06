@@ -1,6 +1,5 @@
 https://maia.bearblog.dev/rss
 https://spacecrowperson.bearblog.dev/rss
-https://tirandoleitedepedro.bearblog.dev/rss
 https://blogdoth.com.br/rss
 https://spirit.bearblog.dev/rss
 https://thedailykiffcooking.bearblog.dev/rss
@@ -14,9 +13,10 @@ https://blog.armeet.ca/rss
 https://some---things.com/rss
 https://robertbirming.com/rss
 https://blog.metroidcrime.com/rss
-https://theprivacydad.com/rss
 https://blog.absurdpirate.com/rss
 https://kami.bearblog.dev/rss
 https://moonlampstation.com/rss
 https://karlitahehe.bearblog.dev/rss
 https://chubsos.bearblog.dev/rss
+https://brnt.sh/too-much/
+https://bearblog.dev/discover/feed/?lang=pt
