@@ -21,3 +21,4 @@ https://brnt.sh/too-much/
 https://bearblog.dev/discover/feed/?lang=pt
 https://playtank.io/category/game-design/rss
 https://tiendil.org/en/feeds/atom
+https://blog.littlepolygon.com/index.xml
